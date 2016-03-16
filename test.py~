@@ -5,8 +5,8 @@ def mapfn(k, v):
   p = []
   for i in xrange(x, v):
     y = 2
-    #if i < 2:
-       #continue
+    if i < 2:
+       continue
     while i % y != 0:
       y = y+1
     if y == i:

@@ -1,33 +1,30 @@
 import mincemeat
 
+#Breaking up the data to feed it to map jobs
 data = {}
-for i in range(1, 101):
-  data[i-1] = i* 100000
+for i in range(1, 701):
+  data[i] = i* 10000
 
-print data
+for j in range(1, 31):
+  data[700 +j] = 7000000 + j *100000
 
+#Map function
 def mapfn(k, v):
-  print "hey"
-  print v
-  x = v - 999999
+  x = v - 9999
   if x <2:
     x = 2
   for i in xrange(x, v):
     y = 2
-    while i % y != 0:
-      y = y+1
-    if y == i:
-      p = str(i)
-      if p == p[::-1]:
+    p = str(i)
+    if p == p[::-1]:
+      while i % y != 0:
+        y = y+1
+      if y == i:
         yield k, i
 
-
+#Reduce function
 def reducefn(k, vs):
-  x = []
-  print k, vs
-  for i in vs:
-       x.append(i)
-  return x
+  return vs
 
 s = mincemeat.Server()
 s.datasource = data
@@ -36,5 +33,11 @@ s.reducefn = reducefn
 
 results = s.run_server(password="changeme")
 
-print results
+p = []
+for x in results.keys():
+  for i in results[x]:  
+    p.append(i)
+
+p.sort()
+print p
 
